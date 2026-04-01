@@ -4103,14 +4103,14 @@ function renderCountrySignalCards() {
       expandedHtml += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:12px;">';
       for (const [cat, pd] of Object.entries(r.per_product)) {
         if (selectedCategory !== 'ALL' && cat.toUpperCase() !== selectedCategory.toUpperCase()) continue;
-        const catLinks = getCategoryLinks(r.links, cat).map(link => `<a href="${link.link}" target="_blank" class="inline-link-icon" title="${link.type || link.category || 'Link'}">${iconSvg('link','ui-icon tiny')}</a>`).join('');
+        const catLinks = getCategoryLinks(r.links, cat).map(link => `<a href="${link.link}" target="_blank" class="inline-link-action" title="${link.type || link.category || 'Link'}">${iconSvg('link','ui-icon tiny')}<span>${link.type || link.category || 'Link'}</span></a>`).join('');
         expandedHtml += `<div style="background:var(--surface2);border-radius:8px;padding:12px;">
-          <div style="font-weight:600;font-size:12px;color:var(--accent2);margin-bottom:6px;display:flex;align-items:center;gap:8px;">${cat}${catLinks ? `<span style="display:inline-flex;gap:6px;">${catLinks}</span>` : ''}</div>
+          <div style="font-weight:600;font-size:12px;color:var(--accent2);margin-bottom:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">${cat}${catLinks ? `<span style="display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;"><span style="color:var(--text2);">-</span>${catLinks}</span>` : ''}</div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:12px;">
             <div>${t('country_sessions')}: <strong>${formatNum(pd.sessions||0)}</strong></div>
             <div>${t('country_plp')}: <strong>${((pd.plp_conv||0)*100).toFixed(1)}%</strong></div>
-            <div>${t('country_purchase')}: <strong>${((pd.purchase_conv||0)*100).toFixed(2)}%</strong></div>
             <div>${t('country_duration')}: <strong>${formatDurationSeconds(pd.duration)}</strong></div>
+            <div>${t('country_purchase')}: <strong>${((pd.purchase_conv||0)*100).toFixed(2)}%</strong></div>
           </div>
         </div>`;
       }
